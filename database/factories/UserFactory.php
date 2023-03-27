@@ -21,7 +21,8 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->freeEmail('@gmail.com'),
             'email_verified_at' => now(),
-            'password' => bcrypt(fake()->regexify('^[a-zA-Z0-9._]{5,8}')), // password
+            'password' => bcrypt(fake()->regexify('^[a-zA-Z0-9._]{5,8}')),
+            'phone_number' => $this->faker->regexify('^08[0-9]{9,12}'),
             'remember_token' => Str::random(10),
         ];
     }

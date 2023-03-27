@@ -7,6 +7,7 @@
     font-family: 'Poppins';
     margin: 0;
     padding: 0;
+    color: #272343;
 }
 
 
@@ -40,8 +41,7 @@ footer {
     justify-content: center;
     border-radius: 18px;
     background-color: #e3f6f5;
-    box-shadow:  5px 5px 5px #d5e7e6,
-                -5px -5px 5px #f1ffff;
+    border: 4px solid #272343;
 }
 
 form {
@@ -73,6 +73,9 @@ img.logo {
     height: auto;
 }
 
+label {
+    color: #272343;
+}
 .input-wrapper input {
     background-color: white;
     border: none;
@@ -99,10 +102,32 @@ button {
     border-radius: 8px;
     margin-top: 30px;
     cursor: pointer;
+    color: #272343;
 }
 
 p.error {
     font-size: 12px;
     color: red;
     margin-top: 4px;
-}  
+}
+
+input[type="file"]{
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input#file-upload-button {
+    border: none;
+}
+
+.flash {
+    position: fixed;
+    background-color: #fffffe;
+    padding: 10px 30px;
+    border-radius: 5px;
+    border: 4px solid #272343;
+    margin-top: 20px;
+    margin-left: 20px;
+}

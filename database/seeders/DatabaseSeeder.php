@@ -14,12 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $admin1 = User::create([
             'name' => 'Admin First',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('admintest'),
             'role' => 'admin',
+            'phone_number' => '08123456789',
             'remember_token' => 'DUhA92axA',
+            'email_verified_at' => now()
         ]);
 
         User::create([
@@ -27,7 +29,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'user1@gmail.com',
             'password' => bcrypt('usertest1'),
             'role' => 'user',
+            'phone_number' => '08123456789',
             'remember_token' => '31c4gAxA',
+            'email_verified_at' => now()
         ]);
 
         User::create([
@@ -35,7 +39,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'user2@gmail.com',
             'password' => bcrypt('usertest2'),
             'role' => 'user',
+            'phone_number' => '08123456789',
             'remember_token' => 'NbAWo9812A',
+            'email_verified_at' => now()
         ]);
 
         User::create([
@@ -43,7 +49,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'user3@gmail.com',
             'password' => bcrypt('usertest3'),
             'role' => 'user',
+            'phone_number' => '08123456789',
             'remember_token' => 'Re0cKCma1',
+            'email_verified_at' => now()
         ]);
         
         User::factory(5)->create();
@@ -53,14 +61,18 @@ class DatabaseSeeder extends Seeder
             'email' => 'adminsecond@gmail.com',
             'password' => bcrypt('admintest2'),
             'role' => 'admin',
+            'phone_number' => '08123456789',
             'remember_token' => 'JiRwa8c7',
-        ])->each(function ($user) {
-            if($user->role === 'admin') {
-                AdminId::create([
-                    'user_id' => $user->id,
-                    'admin_id' => 'ADMIN002',
-                ]);
-            }
-        });
+            'email_verified_at' => now()
+        ]);
+
+        $admins = User::where('role', 'admin')->get();
+        
+        foreach($admins as $index => $admin){
+            AdminId::create([
+                'user_id' => $admin->id,
+                'admin_id' => 'ADMIN00' . $index+1
+            ]);
+        }
     }
 }

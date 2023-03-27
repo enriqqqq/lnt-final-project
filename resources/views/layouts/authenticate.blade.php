@@ -8,11 +8,18 @@
     <link rel="stylesheet" href="{{asset('css/authenticate.css')}}">
 </head>
 <body>
+    @if(session()->has('message'))
+        <div class="flash" x-data="{show:true}" x-init="setTimeout( ()=> show = false, 4500)" x-show="show">
+            <p>{{session('message')}}</p>
+        </div>
+    @endif
+
     <main>
         @yield('main')
     </main>
     <footer>
-        <p class="footer">Footer @2023</p>
+        <p class="footer"> www.footer.com @2023</p>
     </footer>
 </body>
+<script src="//unpkg.com/alpinejs" defer></script>
 </html>
