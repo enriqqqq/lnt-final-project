@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>@yield('title')</title>
+    <link rel="stylesheet" href="{{asset('css/authenticate.css')}}">
 </head>
 <body>
-    <h1>WELCOME ADMIN</h1>
-    <form action="/logout" method="POST">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
+    <main>
+        @yield('main')
+    </main>
+    <footer>
+        <p class="footer">Footer @2023</p>
+    </footer>
 </body>
 </html>

@@ -17,10 +17,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    // isAdmin functionality for middleware
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'phone_number'
     ];
 
     /**

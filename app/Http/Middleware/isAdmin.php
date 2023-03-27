@@ -18,6 +18,6 @@ class isAdmin
         if(auth()->user()->isAdmin()){
             return $next($request);
         }
-        abort(403,'You are unauthorized.');
+        return redirect('/')->with('message','You are not authorized');
     }
 }
