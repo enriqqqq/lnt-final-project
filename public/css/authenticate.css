@@ -103,6 +103,7 @@ button {
     margin-top: 30px;
     cursor: pointer;
     color: #272343;
+    font-size: 16px;
 }
 
 p.error {
@@ -130,4 +131,14 @@ input#file-upload-button {
     border: 4px solid #272343;
     margin-top: 20px;
     margin-left: 20px;
+}
+
+button:hover {
+    filter:brightness(0.85);
+}
+
+p.tiny {
+    font-size: 14px;
+    text-align: center;
+    margin-top: -10px;
 }

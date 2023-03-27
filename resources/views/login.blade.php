@@ -32,6 +32,7 @@
                 @enderror
             </div>
             <button type="submit"> Sign In </button>
+            <p class="tiny">Don't have an account? <a href="/register">Register</a></p>
         </form>
     </div>
 @endsection
