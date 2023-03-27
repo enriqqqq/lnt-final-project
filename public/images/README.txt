@@ -1,0 +1,1 @@
+open-box.png created by Freepik - https://www.flaticon.com/free-icons/box

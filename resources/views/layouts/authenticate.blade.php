@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/authenticate.css')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('images/open-box.png')}}">
 </head>
 <body>
     @if(session()->has('message'))
-        <div class="flash" x-data="{show:true}" x-init="setTimeout( ()=> show = false, 4500)" x-show="show">
+        <div class="flash" x-data="{show:true}" x-init="setTimeout(()=> show = false, 4500)" x-show="show">
             <p>{{session('message')}}</p>
         </div>
     @endif
