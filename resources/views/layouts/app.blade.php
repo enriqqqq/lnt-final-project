@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{asset('css/authenticate.css')}}">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="icon" type="image/x-icon" href="{{asset('images/open-box.png')}}">
 </head>
 <body>
@@ -15,12 +15,21 @@
         </div>
     @endif
     <header>
+        <form id="logout" action="/logout" method="POST" style="display: none;">@csrf</form>
+        
         <div class="logo">
-            <img src="" alt="" class="logo">
-            <p class="title"></p>
+            <img src="{{asset('images/open-box.png')}}" alt="" class="logo">
+            <p class="title">Website Title</p>
         </div>
         <div class="right-side">
-            <img src="" alt="" class="profile">
+            <div class="dropdown">
+                <span>Username</span>
+                <div class="dropdown-content">
+                    <a href="#">Profile</a>
+                    <a onclick="event.preventDefault(); document.getElementById('logout').submit();">Logout</a>
+                </div>
+            </div>
+            <img src="{{asset('images/no-profile.png')}}" alt="" class="profile">
         </div>
     </header>
     <main>

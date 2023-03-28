@@ -25,3 +25,8 @@ Route::get('/user/dashboard', [ItemController::class, 'index']);
 
 // Log user out
 Route::post('/logout', [UserController::class, 'logout']);
+
+// test
+Route::get('/test', function(){
+    return view('layouts.app');
+});
