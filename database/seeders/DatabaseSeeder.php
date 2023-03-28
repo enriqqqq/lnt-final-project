@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use \App\Models\User;
 use \App\Models\AdminId;
+use \App\Models\Item;
+use \App\Models\Category;
 
 class DatabaseSeeder extends Seeder
 {
@@ -74,5 +76,34 @@ class DatabaseSeeder extends Seeder
                 'admin_id' => 'ADMIN00' . $index+1
             ]);
         }
+
+        Category::create([
+            'name' => 'Electronics'
+        ]);
+
+        Category::create([
+            'name' => 'Clothing'
+        ]);
+
+        Item::create([
+            'name' => 'ASUS Laptop',
+            'category_id' => 1,
+            'price' => 1000000,
+            'stock' => 50,
+        ]);
+
+        Item::create([
+            'name' => 'Logitech Mouse',
+            'category_id' => 1,
+            'price' => 550000,
+            'stock' => 50,
+        ]);
+
+        Item::create([
+            'name' => 'Speaker',
+            'category_id' => 1,
+            'price' => 200000,
+            'stock' => 50,
+        ]);
     }
 }

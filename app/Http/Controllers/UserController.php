@@ -47,8 +47,14 @@ class UserController extends Controller
         ]);
 
         if(auth()->attempt($formFields)){
+            $user = User::where('email', $formFields['email'])->first();
             $request->session()->regenerate();
-            return redirect('/welcome');
+            return redirect('/' . $user->role . '/dashboard');
+            // if($user->isAdmin()){
+            //     return redirect('/admin/dashboard');
+            // } else {
+            //     return redirect('/');
+            // }
         }
         
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
