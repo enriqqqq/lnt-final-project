@@ -51,7 +51,7 @@ class UserController extends Controller
             $request->session()->regenerate();
 
             if($user->isAdmin()){
-                return redirect('/');
+                return redirect('/admin');
             } else {
                 return redirect('/');
             }

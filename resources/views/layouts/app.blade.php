@@ -27,17 +27,18 @@
                 <div class="dropdown-content">
                     @auth
                         <a href="#">Profile</a>
+                        @if(auth()->user()->isAdmin())
+                            <a href="#">Add Item</a>
+                            <a href="/">Act as User</a>
+                            <a href="/admin">Admin Page</a>
+                        @endif
                         <a onclick="event.preventDefault(); document.getElementById('logout').submit();">Logout</a>
                     @endauth
-                    @guest
-                        <a href="/register">Register</a>
-                        <a href="/login">Login</a>
-                    @endguest
                 </div>
             </div>
             <img src= 
             @auth 
-                "{{ auth()->user()->image ? asset('storage/images/users/' . auth()->user()->image) : asset('images/no-image.png') }}"
+                "{{ auth()->user()->image ? asset('storage/images/users/' . auth()->user()->image) : asset('images/no-profile.png') }}"
             @endauth 
             @guest 
                 "{{ asset('images/no-profile.png') }}"

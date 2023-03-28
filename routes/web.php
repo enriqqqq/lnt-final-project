@@ -18,13 +18,16 @@ Route::post('/user/store', [UserController::class, 'store']);
 Route::post('/authenticate', [UserController::class, 'authenticate']);
 
 // Admin Dashboard
-Route::get('/admin/dashboard', [AdminController::class, 'index'])->middleware('auth')->middleware('isadmin');
-
-// User Dashboard
-Route::get('/user/dashboard', [ItemController::class, 'index']);
+Route::get('/admin', [ItemController::class, 'admin_index'])->middleware('auth')->middleware('isadmin');
 
 // Log user out
 Route::post('/logout', [UserController::class, 'logout']);
 
 // Show User all Items
 Route::get('/', [ItemController::class, 'index']);
+
+// Create Item
+Route::put('/admin/update/{id}')->middleware('auth')->middleware('isadmin');
+
+// Delete Item
+Route::delete('/admin/delete/{id}')->middleware('auth')->middleware('isadmin');

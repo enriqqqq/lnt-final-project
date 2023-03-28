@@ -301,7 +301,47 @@ p.noentry-wrapper{
     align-items: center;
 }
 
+button.add-category {
+    background-color: #bae8e8;
+}
+
 .category-container a:hover, 
 button:hover {
     filter:brightness(0.85);
+}
+
+/* CRUD ADMIN */
+input {
+    padding: 4px;
+    width: 40%;
+}
+
+.row-update {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+label.update {
+    font-weight: 100;
+}
+
+div#add-to-cart {
+    display: flex;
+    justify-content: space-between;
+    justify-self: flex-end;
+}
+
+form#update {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.update-btn-container {
+    width: 50%;
+}
+
+.btn-delete {
+    background-color: rgb(230, 112, 112);
 }
