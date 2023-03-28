@@ -10,6 +10,7 @@
     color: #272343;
 }
 
+/* APP LAYOUT*/
 body {
     display: flex;
     flex-direction: column;
@@ -44,6 +45,8 @@ img.profile {
     height: 100px;
     width: 100px;
     border-radius: 50%;
+    object-fit: cover;
+    object-position: center center;
 }
 
 .right-side {
@@ -86,17 +89,219 @@ img.profile {
 
 main {
     display: flex;
-    flex-direction: column;
-    background-color: #e3f6f5;
-    align-items: center;
-    justify-content: center;
+    background-color: #bae8e8;
     flex: auto;
-    padding: 40px;
 }
 
 footer {
     display: flex;
+    align-items: center;
     justify-content: center;
     padding: 20px;
     border-top: 4px solid #272343;
+    position: relative;
+}
+
+.flash {
+    position: fixed;
+    background-color: #fffffe;
+    padding: 10px 30px;
+    border-radius: 5px;
+    border: 4px solid #272343;
+    left: 0;
+    bottom: 0;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+/* INDEX */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1.5fr 4fr;
+    grid-template-rows: 1fr;
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    background-color: #272343;
+    color: #fffffe;
+    padding: 15px;
+    width: 20%;
+    gap: 20px;
+}
+
+.content {
+    max-height: 100vh;
+    display: grid;
+    width: 80%;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 30px;
+    padding: 30px;
+    overflow-y: scroll;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fffffe;
+    border-radius: 5px;
+    min-height: 620px;
+}
+
+p.category {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 6px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+form#add-to-cart {
+    display: flex;
+    justify-content: space-between;
+    justify-self: flex-end;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+label {
+    font-weight: 700;
+    align-self: center;
+}
+
+.img-wrapper {
+    height: 500px;
+    background-color: yellowgreen;
+    overflow: hidden;
+}
+
+.img-wrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+button {
+    background-color: #ffd803;
+    width: 40%;
+    height: 42.5px;
+    align-self: center;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 30px;
+    cursor: pointer;
+    color: #272343;
+    font-size: 16px;
+}
+
+input[type="number"]{
+    width: 45px;
+    height: 42.5px;
+    padding: 0;
+    padding-left: 25px;
+    padding-right: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.input-wrapper input {
+    background-color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    width: 90%;
+    height: 10px;
+    border-radius: 0.5rem;
+    color: black;
+    box-shadow: 0 0.25rem #dfd9d9;
+    cursor: pointer;
+}
+  
+.input-wrapper input:focus {
+    outline-color: #ffd803;
+}
+
+button#search {
+    width: 45px;
+    height: 45px;
+    padding: 5px;
+    margin-top: 0;
+    margin-left: 30px;
+}
+
+button#search img {
+    width: 30px;
+    height: 30px;
+}
+
+.search-row {
+    display: flex;
+    gap: 12px;
+}
+
+p.side-text {
+    color: #fffffe;
+    font-size: 20px;
+}
+
+.category-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
+a.category {
+    display: block;
+    background-color: #bae8e8;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+}
+
+button#check-out {
+    width: 90%;
+    margin: 0;
+    padding: 0;
+    justify-self: flex-end;
+}
+
+.preview-container {
+    background-color: #fffffe;
+    border-radius: 5px;
+    flex: auto;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+p.noentry-wrapper{
+    display: flex;
+    flex: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-container a:hover, 
+button:hover {
+    filter:brightness(0.85);
 }

@@ -49,12 +49,12 @@ class UserController extends Controller
         if(auth()->attempt($formFields)){
             $user = User::where('email', $formFields['email'])->first();
             $request->session()->regenerate();
-            return redirect('/' . $user->role . '/dashboard');
-            // if($user->isAdmin()){
-            //     return redirect('/admin/dashboard');
-            // } else {
-            //     return redirect('/');
-            // }
+
+            if($user->isAdmin()){
+                return redirect('/');
+            } else {
+                return redirect('/');
+            }
         }
         
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
@@ -67,6 +67,6 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message', 'You logged out');
+        return redirect('/login')->with('message', 'You logged out');
     }
 }

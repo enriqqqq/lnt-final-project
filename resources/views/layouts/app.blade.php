@@ -9,36 +9,51 @@
     <link rel="icon" type="image/x-icon" href="{{asset('images/open-box.png')}}">
 </head>
 <body>
-    @if(session()->has('message'))
-        <div class="flash" x-data="{show:true}" x-init="setTimeout(()=> show = false, 4500)" x-show="show">
-            <p>{{session('message')}}</p>
-        </div>
-    @endif
     <header>
-        <form id="logout" action="/logout" method="POST" style="display: none;">@csrf</form>
-        
+        @auth
+            <form id="logout" action="/logout" method="POST" style="display: none;">@csrf</form>
+        @endauth
+
         <div class="logo">
-            <img src="{{asset('images/open-box.png')}}" alt="" class="logo">
+            <a href="/"><img src="{{asset('images/open-box.png')}}" alt="" class="logo"></a>
             <p class="title">Website Title</p>
         </div>
         <div class="right-side">
             <div class="dropdown">
-                <span>Username</span>
+                <span> 
+                    @auth {{auth()->user()->name}} @endauth 
+                    @guest Guest @endguest
+                </span>
                 <div class="dropdown-content">
-                    <a href="#">Profile</a>
-                    <a onclick="event.preventDefault(); document.getElementById('logout').submit();">Logout</a>
+                    @auth
+                        <a href="#">Profile</a>
+                        <a onclick="event.preventDefault(); document.getElementById('logout').submit();">Logout</a>
+                    @endauth
+                    @guest
+                        <a href="/register">Register</a>
+                        <a href="/login">Login</a>
+                    @endguest
                 </div>
             </div>
-            <img src="{{asset('images/no-profile.png')}}" alt="" class="profile">
+            <img src= 
+            @auth 
+                "{{ auth()->user()->image ? asset('storage/images/users/' . auth()->user()->image) : asset('images/no-image.png') }}"
+            @endauth 
+            @guest 
+                "{{ asset('images/no-profile.png') }}"
+            @endguest 
+            alt="" class="profile">
         </div>
     </header>
     <main>
-        <div class="sidebar">
-
-        </div>
-        <div class="content"></div>
+        @yield('main')
     </main>
     <footer>
+        @if(session()->has('message'))
+        <div class="flash" x-data="{show:true}" x-init="setTimeout(()=> show = false, 4500)" x-show="show">
+            <p>{{session('message')}}</p>
+        </div>
+        @endif
         <p class="footer"> www.footer.com @2023</p>
     </footer>
 </body>

@@ -21,4 +21,14 @@ class Item extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function scopeFilter($query, array $filters){
+        if($filters['search'] ?? false){
+            $query->where('name', 'like', '%' . request('search') . '%');
+        }
+
+        if($filters['category'] ?? false){
+            $query->where('category_id', '=', request('category'));
+        }
+    }
 }
