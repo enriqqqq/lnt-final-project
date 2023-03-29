@@ -40,37 +40,50 @@
                         <img src="{{$item->image ? asset('storage/images/items/' . $item->image) : asset('images/no-image.jpg')}}" alt="">
                     </div>
                     <div class="description">
-                        <form id="update" action="/admin/update/{{$item->id}}">
+                        <form method="POST" id="{{"delete-" . $item->id}}" class="delete" action="/admin/delete/{{$item->id}}" style="visibility: hidden">@csrf @method('DELETE')</form>
+                        <form method="POST" id={{"update-" . $item->id}}   class="update" action="/admin/update/{{$item->id}}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <div class="row">
-                                <p class="category">{{$item->category->name}}</p>
+                            <div class="row-update">
+                                <select name="category_id" id="category_id">
+                                    @foreach($categories as $category)
+                                        <option 
+                                            value="{{$category->id}}"
+                                            @if($item->category->id == $category->id)
+                                                selected
+                                            @endif>
+                                            {{$category->name}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <label id="category_id" class="category">(Category)<label>
                             </div>
                             <div class="row-update">
-                                <label class="update" for="name">Item Name: </label>
                                 <input id="name" name="name" value="{{$item->name}}">
+                                <label class="update" for="name">(Item Name)</label>
                             </div>
                             <div class="row-update">
-                                <label class="update" for="name">Price: </label>
-                                <p>Rp. </p>
-                                <input id="price" name="price" value="{{$item->price}}">
+                                <div class="container-row">
+                                    <p>Rp. </p>
+                                    <input id="price" name="price" value="{{$item->price}}">
+                                </div>
+                                <label class="update" for="name">(Price)</label>
                             </div>
                             <div class="row-update">
-                                <label class="update" for="image">Image</label>
                                 <input placeholder="{{$item->image}}" type="file" name="image" id="stock" min="1">
+                                <label class="update" for="image">(Image)</label>
                             </div>
                             <div id="add-to-cart">
                                 <div class="update-btn-container">
-                                    <button class="form" type="submit">Update</button>
-                                    <button class="form btn-delete" type="submit">Delete</button>
+                                    <button class="form"            form={{"update-" . $item->id}} type="submit">Update</button>
+                                    <button class="form btn-delete" form={{"delete-" . $item->id}} type="submit">Delete</button>
                                 </div>
                                 <div class="form-item">
-                                    <label for="amount">Stock</label>
+                                    <label for="stock">Stock</label>
                                     <input value="{{$item->stock}}" type="number" name="stock" id="stock" min="1">
                                 </div>
                             </div>
                         </form>
-                        <form action="/admin/delete/{{$item->id}}" id="delete" style="visibility: hidden">@csrf @method('DELETE')</form>
                     </div>
                 </div>
             @endforeach

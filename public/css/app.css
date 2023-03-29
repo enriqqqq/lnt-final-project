@@ -149,7 +149,8 @@ footer {
     min-height: 620px;
 }
 
-p.category {
+p.category, 
+select#category_id {
     font-size: 18px;
     font-weight: 700;
 }
@@ -311,15 +312,17 @@ button:hover {
 }
 
 /* CRUD ADMIN */
-input {
+.row-update input {
     padding: 4px;
     width: 40%;
+    border-radius: 4px;
 }
 
 .row-update {
     display: flex;
     gap: 4px;
     align-items: center;
+    justify-content: space-between;
 }
 
 label.update {
@@ -332,7 +335,7 @@ div#add-to-cart {
     justify-self: flex-end;
 }
 
-form#update {
+form.update {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -344,4 +347,16 @@ form#update {
 
 .btn-delete {
     background-color: rgb(230, 112, 112);
+}
+
+select#category_id {
+    padding: 4px;
+    border-radius: 4px;
+    width: 50%;
+}
+
+.container-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }

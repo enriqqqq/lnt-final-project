@@ -34,6 +34,10 @@
                         @endif
                         <a onclick="event.preventDefault(); document.getElementById('logout').submit();">Logout</a>
                     @endauth
+                    @guest
+                        <a href="/login">Login</a>
+                        <a href="/register">Register</a>
+                    @endguest
                 </div>
             </div>
             <img src= 

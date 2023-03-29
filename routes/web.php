@@ -26,8 +26,8 @@ Route::post('/logout', [UserController::class, 'logout']);
 // Show User all Items
 Route::get('/', [ItemController::class, 'index']);
 
-// Create Item
-Route::put('/admin/update/{id}')->middleware('auth')->middleware('isadmin');
+// Update Item
+Route::put('/admin/update/{item}', [ItemController::class, 'update'])->middleware('auth')->middleware('isadmin');
 
 // Delete Item
-Route::delete('/admin/delete/{id}')->middleware('auth')->middleware('isadmin');
+Route::delete('/admin/delete/{item}', [ItemController::class, 'destroy'])->middleware('auth')->middleware('isadmin');
