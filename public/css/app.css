@@ -238,11 +238,14 @@ input[type="number"]{
 }
 
 button#search {
-    width: 45px;
-    height: 45px;
-    padding: 5px;
+    width: auto;
+    height: auto;
+    padding: 10px;
     margin-top: 0;
     margin-left: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 button#search img {
@@ -260,14 +263,7 @@ p.side-text {
     font-size: 20px;
 }
 
-.category-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 10px;
-    column-gap: 10px;
-}
-
-a.category {
+a.category, .category-ctn {
     display: block;
     background-color: #bae8e8;
     border-radius: 5px;
@@ -359,4 +355,38 @@ select#category_id {
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+.category-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
+button.delete-category {
+    margin: 0;
+    width: 20%;
+}
+
+.category-ctn {
+    display: flex;
+    justify-content: space-between;
+    background-color: #bae8e8;
+    border-radius: 5px;
+    padding: 10px;
+    gap: 15px;
+}
+
+.a-admin {
+    padding: 0px;
+    flex: auto;
+}
+
+a.category.a-admin {
+    text-align: left;
+}
+
+div.category-container.admin-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }

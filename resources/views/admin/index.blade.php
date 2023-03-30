@@ -2,7 +2,8 @@
 
 @section('main')
     <div class="side-bar">
-        <form action="/" id="search">
+        {{-- Search Item --}}
+        <form action="/admin" id="search">
             <div class="search-row">
                 <div class="input-wrapper">
                     <input type="text" placeholder="Search Item..." name="search" class="search">
@@ -12,13 +13,22 @@
                 </button>
             </div>
         </form>
+
+        {{-- Category List --}}
         <p class="side-text">Category</p>
-        <div class="category-container">
+        <div class="category-container admin-grid">
             @foreach ($categories as $category)
-                <a href="{{'/?category=' . $category->id}}" class="category">{{$category->name}}</a>
+                <form action="" class="category" id="category-{{$category->id}}">
+                    @csrf
+                    @method('DELETE')
+                    <div class="category-ctn row">
+                        <a href="{{'/admin/?category=' . $category->id}}" class="category a-admin">{{$category->name}}</a>
+                        <button type="submit" class="delete-category">&#10006;</button>
+                    </div>
+                </form>
             @endforeach
         </div>
-        <form method="POST"action="/" id="add-category">
+        <form method="POST" action="/admin/category/create" id="add-category">
             @csrf
             <div class="search-row">
                 <div class="input-wrapper">
@@ -40,8 +50,8 @@
                         <img src="{{$item->image ? asset('storage/images/items/' . $item->image) : asset('images/no-image.jpg')}}" alt="">
                     </div>
                     <div class="description">
-                        <form method="POST" id="{{"delete-" . $item->id}}" class="delete" action="/admin/delete/{{$item->id}}" style="visibility: hidden">@csrf @method('DELETE')</form>
-                        <form method="POST" id={{"update-" . $item->id}}   class="update" action="/admin/update/{{$item->id}}" enctype="multipart/form-data">
+                        <form method="POST" id="{{"delete-" . $item->id}}" class="delete" action="/admin/items/delete/{{$item->id}}" style="visibility: hidden">@csrf @method('DELETE')</form>
+                        <form method="POST" id={{"update-" . $item->id}}   class="update" action="/admin/items/update/{{$item->id}}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row-update">
