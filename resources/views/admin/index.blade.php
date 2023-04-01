@@ -19,9 +19,6 @@
         {{-- Category List --}}
         <p class="side-text">Category</p>
         <div class="category-container admin-grid">
-            <div class="input-wrapper">
-                <input type="text" placeholder="Edit Category..." name="search" class="search">
-            </div>
             @foreach ($categories as $category)
                 <form method="POST" action="/admin/categories/delete/{{$category->id}}" id="delete-category-{{$category->id}}">@csrf @method('DELETE')</form>
                 <form method="POST" action="/admin/categories/update/{{$category->id}}" class="category" id="update-category-{{$category->id}}">
@@ -47,6 +44,15 @@
                 </button>
             </div>
         </form>
+        @if($errors->any())
+            <div class="error">
+                <p class="side-text">Errors</p>
+                @foreach ($errors->all() as $error)
+                    <p class="error-msg">&#9888; {{ $error }}</p>
+                @endforeach
+                </div>
+            </div>
+        @endif
     </div>
     @if(count($items) == 0)
         <p class= "noentry-wrapper">No Items Found</p>            

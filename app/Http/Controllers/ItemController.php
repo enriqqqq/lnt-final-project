@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -49,6 +50,7 @@ class ItemController extends Controller
 
     // Delete entry
     public function destroy(Item $item){
+        Storage::delete('public/images/items/' . $item->image);
         $item->delete();
         return redirect('/admin')->with('message', 'Entry sucessfully deleted.');
     }
