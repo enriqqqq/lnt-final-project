@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title') Dashboard @endsection
+
 @section('main')
     <div class="side-bar">
         <form action="/" id="search">
@@ -45,6 +47,7 @@
                         </div>
                         <p class="item-name">{{$item->name}}</p>
                         <p class="price">Rp. {{$item->price}}</p>
+                        @auth
                         <form id="add-to-cart" action="">
                             <button>Add to Cart</button>
                             <div class="form-item">
@@ -52,6 +55,7 @@
                                 <input value="1" type="number" name="amount" id="amount" min="1">
                             </div>
                         </form>
+                        @endauth
                     </div>
                 </div>
             @endforeach

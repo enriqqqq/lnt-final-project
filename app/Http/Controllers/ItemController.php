@@ -52,4 +52,31 @@ class ItemController extends Controller
         $item->delete();
         return redirect('/admin')->with('message', 'Entry sucessfully deleted.');
     }
+
+    // Show create form
+    public function create(){
+        return view('create', [
+            'categories' => Category::all()
+        ]);
+    }
+
+    // Store entry
+    public function store(Request $request){
+        $formFields = $request->validate([
+            'category_id' => ['required', 'integer', Rule::exists('categories', 'id')],
+            'name' => ['required', 'between:5, 80'],
+            'price' => ['required', 'integer'],
+            'stock' => ['required', 'integer']
+        ]);
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = $image->storeAs('public/images/items', $imageName);
+            $formFields['image'] = $imageName;
+        }
+
+        Item::create($formFields);
+        return redirect('/admin')->with('message', 'Item sucessfully updated.');
+    }
 }

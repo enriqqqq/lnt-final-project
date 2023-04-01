@@ -186,8 +186,10 @@ label {
 
 .img-wrapper {
     height: 500px;
-    background-color: yellowgreen;
+    background-color: #e9eef1;
     overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .img-wrapper img {
@@ -263,7 +265,9 @@ p.side-text {
     font-size: 20px;
 }
 
-a.category, .category-ctn {
+a.category, 
+.category-ctn,
+.category-input {
     display: block;
     background-color: #bae8e8;
     border-radius: 5px;
@@ -375,7 +379,7 @@ button.delete-category {
     background-color: #bae8e8;
     border-radius: 5px;
     padding: 10px;
-    gap: 15px;
+    gap: 8px;
 }
 
 .a-admin {
@@ -384,9 +388,22 @@ button.delete-category {
 }
 
 a.category.a-admin {
+    background-color: #ffd803;
     text-align: left;
 }
 
 div.category-container.admin-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.category-input {
+    width: 90%;
+    padding: 5px;
+    background-color: #bae8e8;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.delete {
+    background-color:rgb(230, 112, 112);
 }

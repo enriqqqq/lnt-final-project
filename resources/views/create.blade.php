@@ -1,19 +1,31 @@
 @extends('layouts.authenticate')
 
-@section('title') Register @endsection
+@section('title') Add New Item @endsection
 
 @section('main')
     <div class="modal">
-        <form action="/user/store" method="POST" enctype="multipart/form-data">
+        <form action="/admin/items" method="POST" enctype="multipart/form-data">
             @csrf
-            <p class="title">Register</p>
+            <p class="title">Add New Item</p>
             
             <div class="logo">
                 <img class="logo" src="{{asset('images/open-box.png')}}" alt="">
             </div>
 
             <div class="form-field">
-                <label for="name">Name</label>
+                <label for="category_id">Category</label>
+                <select name="category_id" id="category_id" class="create">
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}"> {{$category->name}} </option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                    <p class="">&#9888; {{$message}}</p>
+                @enderror
+            </div>
+
+            <div class="form-field">
+                <label for="name">Item Name</label>
                 <div class="input-wrapper">
                     <input type="text" placeholder="Type here..." name="name" id="name" class="input">
                 </div>
@@ -23,31 +35,21 @@
             </div>
 
             <div class="form-field">
-                <label for="email">Phone Number</label>
+                <label for="price">Price</label>
                 <div class="input-wrapper">
-                    <input type="text" placeholder="Type here..." name="phone_number" id="phone_number" class="input">
+                    <input type="text" placeholder="Type here..." name="price" id="price" class="input">
                 </div>
-                @error('phone_number')
+                @error('price')
                     <p class="error">&#9888; {{$message}}</p>
                 @enderror
             </div>
 
             <div class="form-field">
-                <label for="email">Email</label>
+                <label for="stock">Stock</label>
                 <div class="input-wrapper">
-                    <input type="text" placeholder="Type here..." name="email" id="email" class="input">
+                    <input type="number" min="0" placeholder="Type here..." name="stock" id="stock" class="input">
                 </div>
-                @error('email')
-                    <p class="error">&#9888; {{$message}}</p>
-                @enderror
-            </div>
-
-            <div class="form-field">
-                <label for="password">Password</label>
-                <div class="input-wrapper">
-                    <input type="password" placeholder="Type here..." name="password" id="password" class="input">
-                </div>
-                @error('password')
+                @error('stock')
                     <p class="error">&#9888; {{$message}}</p>
                 @enderror
             </div>
@@ -62,7 +64,7 @@
                 @enderror
             </div>
 
-            <button type="submit"> Register </button>
+            <button type="submit"> Create </button>
         </form>
     </div>
 @endsection

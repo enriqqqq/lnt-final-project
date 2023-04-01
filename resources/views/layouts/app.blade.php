@@ -28,7 +28,7 @@
                     @auth
                         <a href="#">Profile</a>
                         @if(auth()->user()->isAdmin())
-                            <a href="#">Add Item</a>
+                            <a href="/admin/items/create">Add Item</a>
                             <a href="/">Act as User</a>
                             <a href="/admin">Admin Page</a>
                         @endif

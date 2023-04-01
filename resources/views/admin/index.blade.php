@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title') Admin @endsection
+
 @section('main')
     <div class="side-bar">
         {{-- Search Item --}}
@@ -17,22 +19,28 @@
         {{-- Category List --}}
         <p class="side-text">Category</p>
         <div class="category-container admin-grid">
+            <div class="input-wrapper">
+                <input type="text" placeholder="Edit Category..." name="search" class="search">
+            </div>
             @foreach ($categories as $category)
-                <form action="" class="category" id="category-{{$category->id}}">
+                <form method="POST" action="/admin/categories/delete/{{$category->id}}" id="delete-category-{{$category->id}}">@csrf @method('DELETE')</form>
+                <form method="POST" action="/admin/categories/update/{{$category->id}}" class="category" id="update-category-{{$category->id}}">
                     @csrf
-                    @method('DELETE')
+                    @method('PUT')
                     <div class="category-ctn row">
-                        <a href="{{'/admin/?category=' . $category->id}}" class="category a-admin">{{$category->name}}</a>
-                        <button type="submit" class="delete-category">&#10006;</button>
+                        <input class="category-input" name="name" type="text" value="{{$category->name}}">
+                        <button form="delete-category-{{$category->id}}" class="delete-category delete" type="submit">&#10006;</button>
+                        <button form="update-category-{{$category->id}}" class="delete-category"        type="submit">&#9998</button>
+                        <a href="{{'/admin?category=' . $category->id}}" class="category a-admin">Search</a>
                     </div>
                 </form>
             @endforeach
         </div>
-        <form method="POST" action="/admin/category/create" id="add-category">
+        <form method="POST" action="/admin/categories" id="add-category">
             @csrf
             <div class="search-row">
                 <div class="input-wrapper">
-                    <input type="text" placeholder="Add Category..." name="search" class="search">
+                    <input type="text" placeholder="Add Category..." name="name" class="search">
                 </div>
                 <button id="search" class="add-category" type="submit">
                     <img src="{{asset('/images/plus.png')}}" alt="">
