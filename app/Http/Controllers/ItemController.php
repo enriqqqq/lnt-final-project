@@ -5,19 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Cart;
 
 class ItemController extends Controller
 {
     // Get all entries
-    public function index(){
-        return view('index', [
+    public function index(CartController $cartController){
+        $data = [
             'items' => Item::with('category')->latest()->filter(request(['search','category']))->get(),
-            'categories' => Category::all()
-        ]);
+            'categories' => Category::all(),
+        ];
+
+        if(auth()->check()){
+            $data['cart'] = Cart::where('user_id', auth()->user()->id)->with('item')->get();
+        }
+
+        return view('index', $data);
     }
 
     // Get all entries for admin

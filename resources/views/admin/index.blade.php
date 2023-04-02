@@ -50,10 +50,10 @@
                 @foreach ($errors->all() as $error)
                     <p class="error-msg">&#9888; {{ $error }}</p>
                 @endforeach
-                </div>
             </div>
         @endif
     </div>
+
     @if(count($items) == 0)
         <p class= "noentry-wrapper">No Items Found</p>            
     @else

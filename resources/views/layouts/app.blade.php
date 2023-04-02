@@ -7,6 +7,8 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="icon" type="image/x-icon" href="{{asset('images/open-box.png')}}">
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 </head>
 <body>
     <header>
@@ -59,8 +61,9 @@
             <p>{{session('message')}}</p>
         </div>
         @endif
-        <p class="footer"> www.footer.com @2023</p>
+        <p class="footer">© 2023 Enrique Heryanto</p>
     </footer>
 </body>
 <script src="//unpkg.com/alpinejs" defer></script>
+@yield('script')
 </html>

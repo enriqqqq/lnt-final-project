@@ -19,7 +19,7 @@
         @yield('main')
     </main>
     <footer>
-        <p class="footer"> www.footer.com @2023</p>
+        <p class="footer">© 2023 Enrique Heryanto</p>
     </footer>
 </body>
 <script src="//unpkg.com/alpinejs" defer></script>

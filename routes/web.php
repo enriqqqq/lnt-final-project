@@ -5,6 +5,7 @@ use App\http\Controllers\UserController;
 use App\http\Controllers\AdminController;
 use App\http\Controllers\ItemController;
 use App\http\Controllers\CategoryController;
+use App\http\Controllers\CartController;
 
 // Show Login Form
 Route::get('/login', [UserController::class, 'login'])->name('login')
@@ -63,3 +64,15 @@ Route::put('/admin/categories/update/{category}', [CategoryController::class, 'u
 Route::delete('/admin/categories/delete/{category}', [CategoryController::class, 'destroy'])
     ->middleware('auth')
     ->middleware('isadmin');
+
+// Add to Cart
+Route::post('/carts/{user}/{item}', [CartController::class, 'addToCart'])
+    ->middleware('auth');
+
+// Update Cart
+Route::put('carts/update/{cart}', [CartController::class, 'update'])
+    ->middleware('auth');
+
+// Delete Cart
+Route::delete('carts/delete/{cart}', [CartController::class, 'destroy'])
+    ->middleware('auth');
