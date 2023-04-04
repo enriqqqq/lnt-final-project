@@ -86,9 +86,20 @@ class CartController extends Controller
     
     // Store Order
     public function store(Request $request, User $user){
-        $amounts = $request->input('amounts');
+        $allowedFields = [
+            'address',
+            'postal_code',
+            'amounts',
+            'total',
+            '_token'
+        ];
 
-        // validate number
+        // get amount input array
+        $amounts = $request->input('amounts');
+        if($amounts == null){
+            return redirect()->back()->with('message', 'An error occured.');
+        }
+        // validate amount
         $formFields = $request->validate([
             'amounts.*' => ['required', 'numeric', 'min:1']
         ]);
@@ -105,9 +116,16 @@ class CartController extends Controller
             $cartItem->save();
         }
 
+        // reject if there is any other field
+        $extraFields = array_diff(array_keys($request->all()), $allowedFields);
+        if(!empty($extraFields)){
+            return redirect()->back()->with('message', 'An error occured.');
+        }
+
         $formFields = $request->validate([
             'address' => ['required'],
             'postal_code' => ['required', 'regex:/^[0-9]{5}$/'],
+            'total' => ['integer', 'required', 'min:1']
         ]);
         
         foreach($amounts as $cartId => $amount){
@@ -123,9 +141,10 @@ class CartController extends Controller
                 $date = date('Ymd');
                 $time = date('His');
 
-                $formFields['invoice'] = 'INV/' . $date . '/' . $user->id . '_' . $time;
+                $formFields['invoice'] = 'INV-' . $date . '-' . $user->id . '-' . $time;
                 $formFields['user_id'] = $user->id;
                 $formFields['item_id'] = $cartItem->item->id;
+                $formFields['amount'] = $amount;
                 
                 // reduce stock
                 $cartItem->item->stock -= $amount;
@@ -138,6 +157,6 @@ class CartController extends Controller
         }
 
         // no error, show invoice page with print (send mail) button
-        return redirect('/');
+        return redirect('/invoice' . '/' . $user->id . '/' . $formFields['invoice'])->with('message', 'Your order is successful.');
     }
 }

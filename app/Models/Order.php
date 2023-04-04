@@ -8,13 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'invoice';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'invoice',
         'user_id',
         'item_id',
+        'amount',
         'address',
-        'postal_code'
+        'postal_code',
+        'total'
     ];
 
     public function user()
@@ -24,6 +28,6 @@ class Order extends Model
 
     public function item()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsTo(Item::class);
     }
 }

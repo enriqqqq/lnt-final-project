@@ -6,6 +6,7 @@ use App\http\Controllers\AdminController;
 use App\http\Controllers\ItemController;
 use App\http\Controllers\CategoryController;
 use App\http\Controllers\CartController;
+use App\http\Controllers\OrderController;
 
 // Show Login Form
 Route::get('/login', [UserController::class, 'login'])->name('login')
@@ -83,4 +84,11 @@ Route::get('/checkout', [CartController::class, 'checkout'])
 
 // Store Checkout Info
 Route::post('/checkout/{user}', [CartController::class, 'store'])
+    ->middleware('auth');
+
+// Get all orders
+Route::get('/invoice/{user}/all');
+
+// Show Checkout Info
+Route::get('/invoice/{user}/{order}', [OrderController::class, 'show'])
     ->middleware('auth');

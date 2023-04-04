@@ -73,6 +73,7 @@
                 <p style="font-size: 20px" class="category">Total</p>
                 <p style="font-size: 20px" class="total-price">Rp. {{$total}}</p>
             </div>
+            <input name="total" type="hidden" value="{{$total}}">
             <button @if(count($cartItems) == 0) disabled @endif form="checkout">Check Out</button>
         </div>
     </form> 

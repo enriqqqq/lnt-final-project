@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('invoice');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('item_id');
+            $table->integer('amount');
             $table->longText('address');
             $table->string('postal_code');
+            $table->integer('total');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
