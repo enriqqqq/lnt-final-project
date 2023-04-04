@@ -29,12 +29,14 @@
                 <div class="dropdown-content">
                     @auth
                         <a href="#">Profile</a>
+                        <a href={{"/invoice" . "/" . auth()->user()->id . "/all"}}>History</a>
                         @if(auth()->user()->isAdmin())
                             <a href="/admin/items/create">Add Item</a>
                             <a href="/">Act as User</a>
                             <a href="/admin">Admin Page</a>
+                            <a href="/admin/invoice/all">Orders</a>
                         @endif
-                        <a onclick="event.preventDefault(); document.getElementById('logout').submit();">Logout</a>
+                        <a style="cursor:pointer;" onclick="event.preventDefault(); document.getElementById('logout').submit();">Logout</a>
                     @endauth
                     @guest
                         <a href="/login">Login</a>

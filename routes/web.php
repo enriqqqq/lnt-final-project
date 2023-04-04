@@ -86,8 +86,14 @@ Route::get('/checkout', [CartController::class, 'checkout'])
 Route::post('/checkout/{user}', [CartController::class, 'store'])
     ->middleware('auth');
 
-// Get all orders
-Route::get('/invoice/{user}/all');
+// Show ALl Orders
+Route::get('/admin/invoice/all', [OrderController::class, 'all'])
+    ->middleware('auth')
+    ->middleware('isadmin');
+
+// Show Order History
+Route::get('/invoice/{user}/all', [OrderController::class, 'index'])
+    ->middleware('auth');
 
 // Show Checkout Info
 Route::get('/invoice/{user}/{order}', [OrderController::class, 'show'])

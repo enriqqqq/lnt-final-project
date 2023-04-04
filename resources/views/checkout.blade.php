@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('main')
+
+@foreach($cartItems as $cartItem)
+<form style="display: none" method="POST" id="delete-cart-{{$cartItem->id}}" action="/carts/delete/{{$cartItem->id}}">
+    @csrf
+    @method('DELETE')
+</form>
+@endforeach
+
 <form method="POST" action="/checkout/{{auth()->user()->id}}" id="checkout">
     @csrf
     <div class="side-bar checkout">
@@ -25,7 +33,7 @@
                         <p id="sub-total-{{$cartItem->id}}" class="item-name">Rp. {{$cartItem->amount * $cartItem->item->price}}</p>
                     </div>
                     <div class="delete-col">
-                        <button class="delete-cart delete">&#10006;</button>
+                        <button class="delete-cart delete" form="delete-cart-{{$cartItem->id}}">&#10006;</button>
                     </div>
                 </div>
                 @endforeach

@@ -64,7 +64,7 @@ class CartController extends Controller
     // Delete Cart
     public function destroy(Cart $cart){
         $cart->delete();
-        return redirect('/')->with('message', 'You\' removed item from the cart.');
+        return back()->with('message', 'You\' removed item from the cart.');
     }
 
     // Show Checkout Page

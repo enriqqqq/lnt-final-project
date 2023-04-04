@@ -65,6 +65,7 @@
             </div>
 
             <button type="submit"> Create </button>
+            <p class="tiny">Go Back to <a href="/admin">Admin Dashboard</a></p>
         </form>
     </div>
 @endsection
