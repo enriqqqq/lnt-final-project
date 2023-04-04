@@ -70,9 +70,17 @@ Route::post('/carts/{user}/{item}', [CartController::class, 'addToCart'])
     ->middleware('auth');
 
 // Update Cart
-Route::put('carts/update/{cart}', [CartController::class, 'update'])
+Route::put('/carts/update/{cart}', [CartController::class, 'update'])
     ->middleware('auth');
 
 // Delete Cart
-Route::delete('carts/delete/{cart}', [CartController::class, 'destroy'])
+Route::delete('/carts/delete/{cart}', [CartController::class, 'destroy'])
+    ->middleware('auth');
+
+// Show Check Out Page
+Route::get('/checkout', [CartController::class, 'checkout'])
+    ->middleware('auth');
+
+// Store Checkout Info
+Route::post('/checkout/{user}', [CartController::class, 'store'])
     ->middleware('auth');

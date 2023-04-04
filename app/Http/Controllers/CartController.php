@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\Order;
 
 class CartController extends Controller
 {
@@ -15,7 +16,7 @@ class CartController extends Controller
         $formFields = $request->validate([
             'user_id' => ['required', 'integer', Rule::exists('users', 'id')],
             'item_id' => ['required', 'integer', Rule::exists('items', 'id')],
-            'amount' => ['required', 'integer'],
+            'amount' => ['required', 'integer', 'gt:0'],
         ]);
 
         $cart = Cart::where('user_id', $user->id)->where('item_id', $item->id)->first();
@@ -46,7 +47,7 @@ class CartController extends Controller
     // Update Cart
     public function update(Request $request, Cart $cart){
         $formFields = $request->validate([
-            'amount' => ['required', 'integer'],
+            'amount' => ['required', 'integer', 'gt:0'],
         ]);
 
         $cart = Cart::where('id', $cart->id)->with('item')->first();
@@ -64,5 +65,79 @@ class CartController extends Controller
     public function destroy(Cart $cart){
         $cart->delete();
         return redirect('/')->with('message', 'You\' removed item from the cart.');
+    }
+
+    // Show Checkout Page
+    public function checkout(){
+        $cartItems = Cart::where('user_id', auth()->user()->id)->with('item')->get();
+        
+        // show intial total
+        $total = 0;
+        foreach($cartItems as $cartItem){
+            $total += $cartItem->amount * $cartItem->item->price;
+        }
+
+        return view('checkout', [
+            'items' => Item::with('category')->get(),
+            'cartItems' => $cartItems,
+            'total' => $total
+        ]);
+    }
+    
+    // Store Order
+    public function store(Request $request, User $user){
+        $amounts = $request->input('amounts');
+
+        // validate number
+        $formFields = $request->validate([
+            'amounts.*' => ['required', 'numeric', 'min:1']
+        ]);
+
+        // save any updated amount
+        foreach($amounts as $cartId => $amount){
+            $cartItem = Cart::find($cartId);
+
+            if(!$cartItem){
+                return redirect('/')->with('message', 'An error occured.');
+            }
+            
+            $cartItem->amount = $amount;
+            $cartItem->save();
+        }
+
+        $formFields = $request->validate([
+            'address' => ['required'],
+            'postal_code' => ['required', 'regex:/^[0-9]{5}$/'],
+        ]);
+        
+        foreach($amounts as $cartId => $amount){
+            $cartItem = Cart::find($cartId);
+
+            if(!$cartItem){
+                return redirect('/')->with('message', 'An error occured.');
+            }
+            else if($amount > $cartItem->item->stock){
+                return redirect('/')->with('message', 'Sorry! We don\'t have enough stock');
+            }
+            else {
+                $date = date('Ymd');
+                $time = date('His');
+
+                $formFields['invoice'] = 'INV/' . $date . '/' . $user->id . '_' . $time;
+                $formFields['user_id'] = $user->id;
+                $formFields['item_id'] = $cartItem->item->id;
+                
+                // reduce stock
+                $cartItem->item->stock -= $amount;
+                $cartItem->item->save();
+                Order::create($formFields);
+
+                // delete cart items
+                $cartItem->delete();
+            }
+        }
+
+        // no error, show invoice page with print (send mail) button
+        return redirect('/');
     }
 }

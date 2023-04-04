@@ -50,7 +50,7 @@
                     @endforeach
                 </div>
             @endif
-            <button id="check-out">Check Out</button>
+            <a id="checkout" href="/checkout">Check Out</a>
         @endauth
     </div>
     @if(count($items) == 0)

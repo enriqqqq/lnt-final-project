@@ -14,7 +14,7 @@ use App\Models\Cart;
 class ItemController extends Controller
 {
     // Get all entries
-    public function index(CartController $cartController){
+    public function index(){
         $data = [
             'items' => Item::with('category')->latest()->filter(request(['search','category']))->get(),
             'categories' => Category::all(),
