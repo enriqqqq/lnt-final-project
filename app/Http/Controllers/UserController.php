@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\AdminId;
 
 class UserController extends Controller
 {
@@ -68,5 +69,43 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login')->with('message', 'You logged out');
+    }
+
+    // Show User Data
+    public function show(User $user){
+        if (auth()->user()->id != $user->id && !auth()->user()->isAdmin()) {
+            return redirect('/')->with('message', "An error occured.");
+        }
+
+        if(auth()->user()->isAdmin()){
+            return view('profile', [
+                'admin' => AdminId::where('user_id', $user->id)->first()
+            ]);
+        }
+        return view('profile');
+    }
+
+    // Update User
+    public function update(Request $request, User $user){
+        if($request->has('admin_id')){
+            return redirect('/user' . '/update' . '/' . $user->id)->with('message', 'You cannot change Admin ID.');
+        }
+        if($request->has('email') && $user->role != 'admin'){
+            return redirect('/user' . '/update' . '/' . $user->id)->with('message', 'You cannot change your Email.');
+        }
+        $formFields = $request->validate([
+            'name' => ['between:3, 40'],
+            'phone_number' => ['regex:/^08[0-9]{0,12}$/', 'unique:users,phone_number'],
+        ]);
+        
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = $image->storeAs('public/images/users', $imageName);
+            $formFields['image'] = $imageName;
+        }
+
+        $user->update($formFields);
+        return redirect('/users' . '/' . $user->id)->with('message', 'You\'ve updated your info');
     }
 }

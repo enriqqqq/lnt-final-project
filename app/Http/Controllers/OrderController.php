@@ -11,6 +11,10 @@ use App\Models\Order;
 class OrderController extends Controller
 {
     public function index(User $user){
+        if (auth()->user()->id != $user->id && !auth()->user()->isAdmin()) {
+            return redirect('/')->with('message', "An error occured.");
+        }
+
         return view('invoices', [
             'orders' => Order::select('invoice', 'total', 'created_at')
                             ->distinct()
@@ -20,7 +24,7 @@ class OrderController extends Controller
     }
 
     public function show(User $user, Order $order){
-        if (auth()->user()->id !== $user->id && !auth()->user()->isAdmin()) {
+        if (auth()->user()->id != $user->id && !auth()->user()->isAdmin()) {
             return redirect('/')->with('message', "An error occured.");
         }
         return view('invoice', [

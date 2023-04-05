@@ -28,7 +28,7 @@
                 </span>
                 <div class="dropdown-content">
                     @auth
-                        <a href="#">Profile</a>
+                        <a href={{"/users" ."/" . auth()->user()->id}}>Profile</a>
                         <a href={{"/invoice" . "/" . auth()->user()->id . "/all"}}>History</a>
                         @if(auth()->user()->isAdmin())
                             <a href="/admin/items/create">Add Item</a>

@@ -95,6 +95,14 @@ Route::get('/admin/invoice/all', [OrderController::class, 'all'])
 Route::get('/invoice/{user}/all', [OrderController::class, 'index'])
     ->middleware('auth');
 
+// Update User
+Route::put('/users/update/{user}', [UserController::class, 'update'])
+    ->middleware('auth');
+
 // Show Checkout Info
 Route::get('/invoice/{user}/{order}', [OrderController::class, 'show'])
+    ->middleware('auth');
+
+// Show Profile
+Route::get('/users/{user}', [UserController::class, 'show'])
     ->middleware('auth');
