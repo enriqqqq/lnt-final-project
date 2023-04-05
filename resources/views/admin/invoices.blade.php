@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') History @endsection
+@section('title') Orders @endsection
 
 @section('main')
     <div class="container" 
@@ -15,7 +15,7 @@
         <p>No order has been made.</p>
         @else
         <div class="history-container">
-            <p class="title" style="align-self: center; margin-bottom: 20px;">History</p>
+            <p class="title" style="align-self: center; margin-bottom: 20px;">Orders</p>
             @foreach($orders as $order)
             <a href={{"/invoice" . "/" . $order->user->id . "/" . $order->invoice}} class="history-item">
                 <div class="cart-item">

@@ -31,7 +31,7 @@ Route::get('/admin', [ItemController::class, 'admin_index'])
 Route::post('/logout', [UserController::class, 'logout']);
 
 // Show User all Items
-Route::get('/', [ItemController::class, 'index']);
+Route::get('/', [ItemController::class, 'index'])->name('dashboard');
 
 // Show Create Item Form
 Route::get('/admin/items/create', [ItemController::class, 'create']);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PlacedOrder;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Cart;
@@ -127,7 +129,10 @@ class CartController extends Controller
             'postal_code' => ['required', 'regex:/^[0-9]{5}$/'],
             'total' => ['integer', 'required', 'min:1']
         ]);
-        
+
+        $date = date('Ymd');
+        $time = date('His');
+        $invoice = 'INV-' . $date . '-' . $user->id . '-' . $time;
         foreach($amounts as $cartId => $amount){
             $cartItem = Cart::find($cartId);
 
@@ -138,10 +143,7 @@ class CartController extends Controller
                 return redirect('/')->with('message', 'Sorry! We don\'t have enough stock');
             }
             else {
-                $date = date('Ymd');
-                $time = date('His');
-
-                $formFields['invoice'] = 'INV-' . $date . '-' . $user->id . '-' . $time;
+                $formFields['invoice'] = $invoice;
                 $formFields['user_id'] = $user->id;
                 $formFields['item_id'] = $cartItem->item->id;
                 $formFields['amount'] = $amount;
@@ -156,7 +158,12 @@ class CartController extends Controller
             }
         }
 
-        // no error, show invoice page with print (send mail) button
+        // no error, show invoice page
+        $order = Order::where('user_id', $user->id)->where('invoice', $invoice)->first();
+        $items = Order::where('user_id', $user->id)->where('invoice', $invoice)->get();
+
+        Mail::to($user->email)->send(new PlacedOrder($order, $items));
+
         return redirect('/invoice' . '/' . $user->id . '/' . $formFields['invoice'])->with('message', 'Your order is successful.');
     }
 }

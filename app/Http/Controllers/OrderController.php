@@ -44,4 +44,10 @@ class OrderController extends Controller
                             ->get()
         ]);
     }
+
+    public function sendMail(User $user, Order $order){
+        Mail::to('youremail@example.com')->send(new PlacedOrder($order));
+
+        return redirect('/')->with('message', 'An Email has been sent.');
+    }
 }
