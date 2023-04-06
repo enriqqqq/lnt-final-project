@@ -81,7 +81,7 @@
                 <p style="font-size: 20px" class="category">Total</p>
                 <p style="font-size: 20px" class="total-price">Rp. {{number_format($total, 0, ',', '.')}}</p>
             </div>
-            <input name="total" type="hidden" value="{{number_format($total, 0, ',' , '.')}}">
+            <input name="total" type="hidden" value="{{$total}}">
             <div class="container" style="display: flex; flex-direction: column; align-items:center">
                 <button @if(count($cartItems) == 0) disabled @endif form="checkout">Check Out</button>
                 <p style="margin-top: 7px;"class="tiny">Go Back to <a href="/">Dashboard</a></p>

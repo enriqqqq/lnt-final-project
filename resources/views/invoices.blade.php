@@ -22,7 +22,7 @@
                     <p class="category">{{$order->invoice}}</p>
                     <p>{{$order->created_at->format('j F Y')}}</p>
                 </div>
-                <p>Rp. {{$order->total}}</p>
+                <p>Rp. {{number_format($order->total, 0, ',' , '.')}}</p>
             </a>
             @endforeach
         </div>

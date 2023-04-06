@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // image: https://static.wikia.nocookie.net/moviedatabase/images/8/8c/Tony_Stark.jpg/revision/latest?cb=20150430161420
         $admin1 = User::create([
             'name' => 'Admin First',
             'email' => 'admin@gmail.com',
@@ -107,6 +108,7 @@ class DatabaseSeeder extends Seeder
             'image' => '1680782583_paulsleep.jpg'
         ]);
 
+        // image: https://www.asus.com/media/Odin/Websites/global/Series/17.png
         Item::create([
             'name' => 'ASUS Laptop',
             'category_id' => 1,
@@ -122,6 +124,7 @@ class DatabaseSeeder extends Seeder
             'stock' => 50,
         ]);
 
+        // image: https://www.qsc.com/fileadmin/user_upload/q_loudspeakers_kseries_KW152_img_heroFront.jpg
         Item::create([
             'name' => 'Speaker',
             'category_id' => 1,
@@ -130,6 +133,7 @@ class DatabaseSeeder extends Seeder
             'image' => '1680783014_speaker.jpg'
         ]);
 
+        // image: https://5.imimg.com/data5/BI/MR/IH/SELLER-96884460/men-tony-stark-face-graphic-t-shirt-1000x1000.jpg
         Item::create([
             'name' => 'Tony  Stark Face Graphic T-Shirt',
             'category_id' => 2,
@@ -145,6 +149,7 @@ class DatabaseSeeder extends Seeder
             'stock' => 280,
         ]);
 
+        // image: https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Bakmi_Aloi_Grogol_2.jpg/1200px-Bakmi_Aloi_Grogol_2.jpg
         Item::create([
             'name' => 'Bakmi',
             'category_id' => 4,
