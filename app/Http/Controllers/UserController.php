@@ -24,7 +24,7 @@ class UserController extends Controller
         $formFields = $request->validate([
             'name' => ['required', 'between:3, 40'],
             'email' => ['required', 'regex:/^[a-zA-Z0-9._]+@gmail.com$/', 'unique:users,email'],
-            'password' => ['required', 'between:10, 40'],
+            'password' => ['required', 'between:6, 12'],
             'phone_number' => ['required', 'regex:/^08[0-9]{0,12}$/', 'unique:users,phone_number']
         ]);
 

@@ -39,7 +39,7 @@
                         <p>{{$item->item->name}} x{{$item->amount}}</p>
                         <span style="font-size: 12px;font-weight:700">{{$item->item->category->name}}</span>
                     </div>
-                    <p>Rp. {{$item->amount * $item->item->price}}</p>
+                    <p>Rp. {{number_format($item->amount * $item->item->price, 0 , ',' , '.')}}</p>
                 </div>
                 @endforeach
             </div>
@@ -47,7 +47,7 @@
             <div class="cart-item" style="margin-top: 30px;">
                 <div class="item-sub">
                     <p class="category">Total</p>
-                    <p class="category">Rp. {{$total}}</p>
+                    <p class="category">Rp. {{number_format($total, 0, ',' , '.')}}</p>
                 </div>
             </div>
             <div class="cart-item" style="margin-top: 30px;">

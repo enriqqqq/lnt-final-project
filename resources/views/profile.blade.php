@@ -13,7 +13,7 @@
         <div class="modal" style="align-items: center; width: 55%; gap: 20px;">
             <p class="title">Profile</p>
             <div class="container" style="display: flex; gap: 45px; align-items:center; justify-content: center;">
-                <div class="img-cwrapper" style="width: 35%; height: 85%">
+                <div class="img-cwrapper" style="width: 35%; height: 300px;">
                     <img class="item-img" src="{{auth()->user()->image ? asset('storage/images/users/' . auth()->user()->image) : asset('images/no-image.jpg')}}" alt="">
                 </div>
                 <form action="{{url('/users/update/' . auth()->user()->id)}}" method="POST" enctype="multipart/form-data" id="update" style="display: flex; flex-direction: column; gap: 10px;">

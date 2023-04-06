@@ -25,7 +25,7 @@
             <div id="cart" class="preview-container side-text" data-user-id="{{auth()->user()->id}}">
                 @foreach($cart as $cartItem)
                     <div class="cart-item">
-                        <div class="item-qty"> {{$cartItem->item->name . " @Rp." . $cartItem->item->price . " each"}}</div>
+                        <div class="item-qty"> {{$cartItem->item->name . " @Rp." . number_format($cartItem->item->price, 0, ',', '.') . " each"}}</div>
                         <div class="cart-row">
                             <form method="POST" id="update-cart-{{$cartItem->id}}" action="/carts/update/{{$cartItem->id}}">
                                 @csrf
@@ -68,7 +68,7 @@
                             <p>Stock: {{$item->stock}}</p>
                         </div>
                         <p class="item-name">{{$item->name}}</p>
-                        <p class="price">Rp. {{$item->price}}</p>
+                        <p class="price">Rp. {{number_format($item->price, 0, ',', '.')}}</p>
                         @auth
                         <form method="POST" id="add-to-cart" action="/carts/{{auth()->user()->id}}/{{$item->id}}">
                             @csrf

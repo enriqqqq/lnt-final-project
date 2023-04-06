@@ -125,7 +125,7 @@ class CartController extends Controller
         }
 
         $formFields = $request->validate([
-            'address' => ['required'],
+            'address' => ['required', 'between:10,100'],
             'postal_code' => ['required', 'regex:/^[0-9]{5}$/'],
             'total' => ['integer', 'required', 'min:1']
         ]);
@@ -133,6 +133,8 @@ class CartController extends Controller
         $date = date('Ymd');
         $time = date('His');
         $invoice = 'INV-' . $date . '-' . $user->id . '-' . $time;
+        
+        // validate amount and stock
         foreach($amounts as $cartId => $amount){
             $cartItem = Cart::find($cartId);
 
@@ -142,20 +144,22 @@ class CartController extends Controller
             else if($amount > $cartItem->item->stock){
                 return redirect('/')->with('message', 'Sorry! We don\'t have enough stock');
             }
-            else {
-                $formFields['invoice'] = $invoice;
-                $formFields['user_id'] = $user->id;
-                $formFields['item_id'] = $cartItem->item->id;
-                $formFields['amount'] = $amount;
-                
-                // reduce stock
-                $cartItem->item->stock -= $amount;
-                $cartItem->item->save();
-                Order::create($formFields);
+        }
 
-                // delete cart items
-                $cartItem->delete();
-            }
+        // update database
+        foreach($amounts as $cartId => $amount){
+            $formFields['invoice'] = $invoice;
+            $formFields['user_id'] = $user->id;
+            $formFields['item_id'] = $cartItem->item->id;
+            $formFields['amount'] = $amount;
+            
+            // reduce stock
+            $cartItem->item->stock -= $amount;
+            $cartItem->item->save();
+            Order::create($formFields);
+
+            // delete cart items
+            $cartItem->delete();
         }
 
         // no error, show invoice page and send mail

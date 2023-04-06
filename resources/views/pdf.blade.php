@@ -105,7 +105,7 @@
                     <span style="font-size: 12px;font-weight:700">{{$item->item->category->name}}</span>
                       <p>{{$item->item->name}} x{{$item->amount}}</p>
                   </div>
-                  <p>Rp. {{$item->amount * $item->item->price}}</p>
+                  <p>Rp. {{number_format($item->amount * $item->item->price, 0 , ',' , '.')}}</p>
               </div>
               @endforeach
           </div>

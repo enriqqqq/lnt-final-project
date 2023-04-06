@@ -20,17 +20,17 @@
                 @foreach($cartItems as $cartItem)
                 <div class="item-container">
                     <div class="img-cwrapper">
-                        <img src="{{asset('/images/no-image.jpg')}}" alt="" class="item-img">
+                        <img src="{{$cartItem->item->image ? asset('storage/images/items/' . $cartItem->item->image) : asset('/images/no-image.jpg')}}" alt="" class="item-img">
                     </div>
                     <div class="item-info">
                         <p class="category">{{$cartItem->item->category->name}}</p>
                         <p class="item-name">{{$cartItem->item->name}}</p>
-                        <p class="item-name">Rp. {{$cartItem->item->price}}</p>
+                        <p class="item-name">Rp. {{number_format($cartItem->item->price, 0, ',', '.')}}</p>
                         <input data-item-price="{{$cartItem->item->price}}" name="amounts[{{$cartItem->id}}]"type="number" class="checkout amount" min="1" value ="{{$cartItem->amount}}">
                     </div>
                     <div class="sub-total">
                         <p class="category">Sub-Total</p>
-                        <p id="sub-total-{{$cartItem->id}}" class="item-name">Rp. {{$cartItem->amount * $cartItem->item->price}}</p>
+                        <p id="sub-total-{{$cartItem->id}}" class="item-name">Rp. {{number_format($cartItem->amount * $cartItem->item->price, 0, ',', '.')}}</p>
                     </div>
                     <div class="delete-col">
                         <button class="delete-cart delete" form="delete-cart-{{$cartItem->id}}">&#10006;</button>
@@ -79,17 +79,27 @@
             </div>
             <div class="total">
                 <p style="font-size: 20px" class="category">Total</p>
-                <p style="font-size: 20px" class="total-price">Rp. {{$total}}</p>
+                <p style="font-size: 20px" class="total-price">Rp. {{number_format($total, 0, ',', '.')}}</p>
             </div>
-            <input name="total" type="hidden" value="{{$total}}">
-            <button @if(count($cartItems) == 0) disabled @endif form="checkout">Check Out</button>
+            <input name="total" type="hidden" value="{{number_format($total, 0, ',' , '.')}}">
+            <div class="container" style="display: flex; flex-direction: column; align-items:center">
+                <button @if(count($cartItems) == 0) disabled @endif form="checkout">Check Out</button>
+                <p style="margin-top: 7px;"class="tiny">Go Back to <a href="/">Dashboard</a></p>
+            </div>
+            
         </div>
     </form> 
 @endsection
 
 @section('script')
 <script>
+    // number format configuration
+    const options = { minimumFractionDigits: 0, maximumFractionDigits: 0};
+    
+    // select all amount inputs
     const amountInputs = document.querySelectorAll('.checkout.amount');
+   
+   // assign listener to update subtotal and total when amount change
     amountInputs.forEach(input => {
         console.log(input.data);
         input.addEventListener('input', (event) => {
@@ -100,7 +110,7 @@
             // update subtotal
             let amount = event.target.value;
             let subtotal = price * amount;
-            document.querySelector(`#sub-total-${id}`).textContent = `Rp. ${subtotal}`;
+            document.querySelector(`#sub-total-${id}`).textContent = `Rp. ${subtotal.toLocaleString('en-US', options).replace(/,/g, ".")}`;
             
             // update total
             let total = 0;
@@ -108,7 +118,7 @@
                 total += item.value * item.getAttribute('data-item-price');
             });
 
-            document.querySelector('.total-price').textContent = `Rp. ${total}`;
+            document.querySelector('.total-price').textContent = `Rp. ${total.toLocaleString('en-US', options).replace(/,/g, ".")}`;
         });
     });
 </script>

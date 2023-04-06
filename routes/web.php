@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\UserController;
-use App\http\Controllers\AdminController;
 use App\http\Controllers\ItemController;
 use App\http\Controllers\CategoryController;
 use App\http\Controllers\CartController;
