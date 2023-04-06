@@ -7,6 +7,7 @@ use App\http\Controllers\ItemController;
 use App\http\Controllers\CategoryController;
 use App\http\Controllers\CartController;
 use App\http\Controllers\OrderController;
+use App\Models\Order;
 
 // Show Login Form
 Route::get('/login', [UserController::class, 'login'])->name('login')
@@ -90,6 +91,10 @@ Route::post('/checkout/{user}', [CartController::class, 'store'])
 Route::get('/admin/invoice/all', [OrderController::class, 'all'])
     ->middleware('auth')
     ->middleware('isadmin');
+
+// Download Invoice
+Route::get('/invoice/download/{order}', [OrderController::class, 'download'])
+    ->middleware('auth');
 
 // Show Order History
 Route::get('/invoice/{user}/all', [OrderController::class, 'index'])

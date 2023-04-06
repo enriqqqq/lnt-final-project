@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\AdminId;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -90,12 +91,14 @@ class UserController extends Controller
         if($request->has('admin_id')){
             return redirect('/user' . '/update' . '/' . $user->id)->with('message', 'You cannot change Admin ID.');
         }
+
         if($request->has('email') && $user->role != 'admin'){
             return redirect('/user' . '/update' . '/' . $user->id)->with('message', 'You cannot change your Email.');
         }
+
         $formFields = $request->validate([
             'name' => ['between:3, 40'],
-            'phone_number' => ['regex:/^08[0-9]{0,12}$/', 'unique:users,phone_number'],
+            'phone_number' => ['regex:/^08[0-9]{0,12}$/', Rule::unique('users')->ignore($user->id)],
         ]);
         
         if($request->hasFile('image')){

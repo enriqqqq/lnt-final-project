@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// use Barryvdh\Snappy\Facades\SnappyPdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\User;
@@ -19,6 +21,7 @@ class OrderController extends Controller
             'orders' => Order::select('invoice', 'total', 'created_at')
                             ->distinct()
                             ->where('user_id', $user->id)
+                            ->latest()
                             ->get()
         ]);
     }
@@ -27,6 +30,7 @@ class OrderController extends Controller
         if (auth()->user()->id != $user->id && !auth()->user()->isAdmin()) {
             return redirect('/')->with('message', "An error occured.");
         }
+        
         return view('invoice', [
             'items' => Order::where('user_id', $user->id)->where('invoice', $order->invoice)->get(),
             'invoice' => $order->invoice,
@@ -41,13 +45,22 @@ class OrderController extends Controller
         return view('admin.invoices', [
             'orders' => Order::select('user_id', 'invoice', 'total', 'created_at')
                             ->distinct()
+                            ->latest()
                             ->get()
         ]);
     }
 
-    public function sendMail(User $user, Order $order){
-        Mail::to('youremail@example.com')->send(new PlacedOrder($order));
+    public function download(Order $order){
+        if (auth()->user()->id != $order->user->id && !auth()->user()->isAdmin()) {
+            return redirect('/')->with('message', "An error occured.");
+        }
 
-        return redirect('/')->with('message', 'An Email has been sent.');
+        $data = [
+            'items' => Order::where('user_id', $order->user->id)->where('invoice', $order->invoice)->get(),
+            'order' => $order,
+        ];
+        
+        $pdf = \PDF::loadView('pdf', $data);
+        return $pdf->download($order->invoice . '.pdf');
     }
 }

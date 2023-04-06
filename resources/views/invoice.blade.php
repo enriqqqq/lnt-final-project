@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="cart-item" style="margin-top: 30px;">
-                <a href="/sendmail" id="checkout">Print</a>
+                <a href="/invoice/download/{{$invoice}}" id="checkout">Print</a>
                 <div class="link" style="display:flex; align-self:center">
                     <p style="margin-top: 7px;"class="tiny">Go Back to <a href="/">Dashboard</a></p>
                 </div>

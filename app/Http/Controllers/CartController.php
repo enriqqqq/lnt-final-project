@@ -158,7 +158,7 @@ class CartController extends Controller
             }
         }
 
-        // no error, show invoice page
+        // no error, show invoice page and send mail
         $order = Order::where('user_id', $user->id)->where('invoice', $invoice)->first();
         $items = Order::where('user_id', $user->id)->where('invoice', $invoice)->get();
 
